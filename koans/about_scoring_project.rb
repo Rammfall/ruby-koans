@@ -34,13 +34,24 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   sum = 0
-  num = 0
-  dice.map do |item|
-    sum += 50 if item == 5
-    sum += 100 if item == 1
+  hash = Hash.new(0)
+  dice.each { |item| hash[item.to_s] += 1 }
+  hash.map do |key, value|
+    value = value.to_i
+    if key.to_i == 1
+      if value >= 3
+        sum += 1000
+        value -= 3
+      end
+      sum += 100 * value
+    end
+    if value >= 3
+      sum += key.to_i * 100
+      value -= 3
+    end
+    sum += 50 * value if key.to_i == 5
   end
-
-  return sum
+  sum
 end
 
 class AboutScoringProject < Neo::Koan

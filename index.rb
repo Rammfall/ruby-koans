@@ -1,5 +1,15 @@
-value = "and"
-symbol = :"cats #{value} dogs"
+class DiceSet
+  def roll(num)
+    @arr = Array.new
 
-print symbol.class
-# assert_equal __.to_sym, symbol
+    (num + 1).times { |i| @arr.push i if i != 0 }
+  end
+
+  def values
+    @arr
+  end
+end
+
+dice = DiceSet.new
+dice.roll(5)
+puts dice.values
